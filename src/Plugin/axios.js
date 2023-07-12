@@ -16,6 +16,9 @@ function getToken(){
                 }else {
                     reject('')
                 }
+        }).catch(e=>{
+          console.log('Erro',e)
+          reject('')
         })
     })
 } 
@@ -26,6 +29,9 @@ server.interceptors.request.use(
         config.headers.Authorization = token;
       }
     
+      return config;
+    }).catch(e=>{
+      console.log('Erro',e)
       return config;
     }),
     error => Promise.reject(error)
