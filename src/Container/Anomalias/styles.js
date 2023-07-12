@@ -13,11 +13,11 @@ export default styles = StyleSheet.create({
     fontSize: 15,
   },
   itemDetail: {
-    alignItems: "flex-end",
+    alignItems: "flex-start",
     bot: "#dcda48",
     flexGrow: 1,
     margin: 4,
-    padding: 20,
+    padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#000000",
   },

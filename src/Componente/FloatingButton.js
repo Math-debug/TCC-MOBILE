@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { Alert, Modal,View, TouchableOpacity, StyleSheet, Pressable,Text,TextInput } from "react-native";
+import { Alert, Modal,View, TouchableOpacity, StyleSheet, Pressable,Text,TextInput, ToastAndroid } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import UserService from "../Service/UserService";
 import anomalyActionService from "../Service/AnomalyActionService";
@@ -18,7 +18,7 @@ const FloatingButton = (item) => {
           setModalVisible(true)
         }}
       >
-        <Icon name="plus" size={25} color="#FFFF" />
+        <Icon name="plus" size={25} color="#000000" />
       </TouchableOpacity>
     </View>
       <Modal
@@ -33,11 +33,20 @@ const FloatingButton = (item) => {
             <Text style={styles.modalText}>Adicionar Ação</Text>
             <TextInput
               style={styles.input}
+              placeholder="Descrição da ação"
               keyboardType="text"
               autoCapitalize="none"
               autoCorrect={false}
               onChangeText={(text) => { setAction(text) }}
           />
+          <View style={styles.container}>
+          <Pressable
+              style={[styles.button, styles.buttonClose, {alignItems:"flex-start", marginRight: 15, backgroundColor:"#808080"}]}
+              onPress={() => {
+                setModalVisible(!modalVisible)
+                }}>
+              <Text style={{...styles.textStyle}}>Cancel</Text>
+            </Pressable>
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => {
@@ -51,7 +60,7 @@ const FloatingButton = (item) => {
                     console.log(actionAnomaly)
                     if(action != null){
                       new anomalyActionService().createAnomalyAction(actionAnomaly).then(()=>{
-                        Alert.alert("Sucesso", "Ação inserida com sucesso")
+                        ToastAndroid.show('Ação inserida', ToastAndroid.SHORT)
                         setModalVisible(!modalVisible)
                       }).catch(e=>{
                         Alert.alert("Erro", e.message)
@@ -63,8 +72,9 @@ const FloatingButton = (item) => {
                     }
                 })
                 }}>
-              <Text style={styles.textStyle}>Salvar</Text>
+              <Text style={styles.textStyle}>OK</Text>
             </Pressable>
+            </View>
           </View>
         </View>
       </Modal>
@@ -76,8 +86,15 @@ const FloatingButton = (item) => {
 export default FloatingButton;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+    padding: 5,
+    height: '100%',
+    flexDirection: "row"
+  },
   circle: {
-     backgroundColor: '#f52d56',
+     backgroundColor: '#FFFFFF',
      width: 60,
      height: 60,
      position: 'absolute',
@@ -86,6 +103,7 @@ const styles = StyleSheet.create({
      borderRadius: 50,
      justifyContent: 'center',
      alignItems: 'center',
+     borderWidth: 1
   },
   centeredView: {
     flex: 1,
@@ -111,7 +129,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 5,
     padding: 10,
     elevation: 2,
   },
@@ -125,19 +143,20 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize:20
+    fontSize:18
   },
   modalText: {
     marginBottom: 50,
-    fontSize: 25,
+    fontSize: 18,
     textAlign: 'center',
+    borderBottomColor: "#000000",
+    borderBottomWidth: 1,
   },
   input: {
-    backgroundColor: '#d3d3d3',
     width: '90%',
     marginBottom: 15,
     color: '#222',
-    fontSize: 22,
+    fontSize: 15,
     borderRadius: 7,
     padding: 10,
     marginBottom: 50

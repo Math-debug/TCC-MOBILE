@@ -60,11 +60,10 @@ export default class App extends React.Component {
         return null
     }
     const data = new Date(date);
-    data.setHours(data.getHours() - 3)
 
-    const dia = this.adicionarZero(data.getUTCDate());
-    const mes = this.adicionarZero(data.getUTCMonth() + 1);
-    const ano = data.getUTCFullYear();
+    const dia = this.adicionarZero(data.getDate());
+    const mes = this.adicionarZero(data.getMonth() + 1);
+    const ano = data.getFullYear();
     const horas = this.adicionarZero(data.getHours());
     const minutos = this.adicionarZero(data.getMinutes());
     const segundos = this.adicionarZero(data.getSeconds());
@@ -100,8 +99,8 @@ export default class App extends React.Component {
                 </View>
                 <View style={styles.itemDetail}>
                   <Text style={styles.item}>{"idEquipamento: " + item.keepAlive.equipment.id}</Text>
-                  <Text style={styles.item}>{"ocorrência: " + item.anomalytype.description}</Text>
-                  <Text style={styles.item}>{"data: " + this.fortmateDate(item.createdat)}</Text>
+                  <Text style={{...styles.item, fontWeight: 'bold'}}>{item.anomalytype.description}</Text>
+                  <Text style={styles.item}>{this.fortmateDate(item.createdat)}</Text>
                 </View>
                 </View>
                 </Pressable>)
